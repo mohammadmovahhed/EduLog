@@ -4,11 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduLog.DataLayer.Entities
 {
-    public class Post
+    public class Post : BaseEntity
     {
-        [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id { get; set; }
-
         [Required]
         public string Title { get; set; }
 
@@ -17,12 +14,9 @@ namespace EduLog.DataLayer.Entities
         public int Visits { get; set; }
 
         [Required]
-        //[Index(IsUnique = true)]
         public string Slug { get; set; }
 
         public PostStatus Status { get; set; }
-        public DateTime CreateAt { get; set; } = DateTime.Now;
-
         public int UserId { get; set; }
         public int CategoryId { get; set; }
 

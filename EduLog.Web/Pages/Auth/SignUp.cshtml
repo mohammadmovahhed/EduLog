@@ -1,0 +1,31 @@
+﻿@page
+@model EduLog.Web.Pages.Auth.SignUpModel
+@{
+    Layout = "_AuthLayout";
+}
+
+<h2>ثبت‌نام در سایت</h2>
+<form action="#">
+    <div class="input-box">
+        <input type="text" placeholder="نام کامل خود را وارد کنید">
+    </div>
+    <div class="input-box">
+        <input type="text" placeholder="ایمیل خود را وارد کنید">
+    </div>
+    <div class="input-box">
+        <input type="password" placeholder="کلمه عبور">
+    </div>
+    <div class="input-box">
+        <input type="password" placeholder="تکرار کلمه عبور">
+    </div>
+    <div class="policy">
+        <input type="checkbox">
+        <h3>با قوانین و مقررات موافقم</h3>
+    </div>
+    <div class="input-box button">
+        <input value="ثبت‌نام">
+    </div>
+    <div class="text">
+        <h3>قبلاً ثبت‌نام کرده‌اید؟ <a asp-page="SignIn">وارد شوید</a></h3>
+    </div>
+</form>

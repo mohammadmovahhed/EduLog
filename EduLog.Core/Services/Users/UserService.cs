@@ -56,17 +56,17 @@ namespace EduLog.CoreLayer.Services.Users
             }
         }
 
-        public async Task<OperationResult> LoginUser(UserLoginDto loginDto)
+        public async Task<OperationResult<UserDto>> LoginUser(UserLoginDto loginDto)
         {
             if (loginDto == null)
-                return OperationResult.Error("اطلاعات ورود نمی‌تواند خالی باشد");
+                return OperationResult.Error<UserDto>(message: "اطلاعات ورود نمی‌تواند خالی باشد");
 
             // اعتبارسنجی ورودی‌ها
             if (string.IsNullOrWhiteSpace(loginDto.UserName))
-                return OperationResult.Error("نام کاربری الزامی است");
+                return OperationResult.Error<UserDto>(message: "نام کاربری الزامی است");
 
             if (string.IsNullOrWhiteSpace(loginDto.Password))
-                return OperationResult.Error("گذرواژه الزامی است");
+                return OperationResult.Error<UserDto>(message: "گذرواژه الزامی است");
 
             // پیدا کردن کاربر
             var user = await _context.Users
@@ -74,11 +74,18 @@ namespace EduLog.CoreLayer.Services.Users
                 .FirstOrDefaultAsync(u => u.UserName == loginDto.UserName.Trim() && !u.IsDelete);
 
             if (user == null)
-                return OperationResult.NotFound("کاربری با این مشخصات یافت نشد");
+            {
+                // تأخیر برای جلوگیری از brute force
+                await Task.Delay(2000);
+                return OperationResult.Error<UserDto>(Enums.OperationResultStatus.NotFound, message: "نام کاربری یا گذرواژه نامعتبر است");
+            }
 
             // بررسی گذرواژه
             if (!user.PasswordHash.CompareWithBcrypt(loginDto.Password))
-                return OperationResult.Error("گذرواژه نامعتبر است");
+            {
+                await Task.Delay(2000);
+                return OperationResult.Error<UserDto>(Enums.OperationResultStatus.Unauthorized, "نام کاربری یا کلمه عبور نامعتبر است");
+            }
 
             // بازگرداندن اطلاعات کاربر
             var userDto = MapToUserDto(user);
@@ -120,7 +127,7 @@ namespace EduLog.CoreLayer.Services.Users
                 Id = user.Id,
                 UserName = user.UserName,
                 FullName = user.FullName,
-                CreationTime = user.CreateAt,
+                RegistrationDate = user.CreateAt,
                 Role = user.UserRole
             };
         }

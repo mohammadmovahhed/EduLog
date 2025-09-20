@@ -53,11 +53,12 @@ namespace EduLog.CoreLayer.Utilities
             };
         }
 
-        public static OperationResult<T> Error<T>(string? message = null)
+        public static OperationResult<T> Error<T>(OperationResultStatus? status = null,
+                                                  string? message = null)
         {
             return new OperationResult<T>()
             {
-                Status = OperationResultStatus.Error,
+                Status = status?? OperationResultStatus.Error,
                 Message = message ?? "عملیات ناموفق بود",
                 Data = default
             };

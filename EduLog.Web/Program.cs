@@ -1,5 +1,6 @@
 using EduLog.CoreLayer.Services.Users;
 using EduLog.DataLayer.Context;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +16,31 @@ builder.Services.AddDbContext<BlogContext>(options =>
 );
 
 builder.Services.AddScoped<IUserService, UserService>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/auth/signin";
+        options.LogoutPath = "/auth/signout";
+        options.AccessDeniedPath = "/auth/access-denied";
+        options.ExpireTimeSpan = TimeSpan.FromDays(7);
+        options.SlidingExpiration = true;
+        options.Cookie = new CookieBuilder
+        {
+            HttpOnly = true,
+            SameSite = SameSiteMode.Strict,
+            SecurePolicy = CookieSecurePolicy.Always
+        };
+    });
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("RequireAdmin", policy =>
+        policy.RequireRole("Admin"));
+
+    options.AddPolicy("RequireUser", policy =>
+        policy.RequireRole("User", "Admin"));
+});
 
 var app = builder.Build();
 
@@ -37,6 +63,7 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapStaticAssets();

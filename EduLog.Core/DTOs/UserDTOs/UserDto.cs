@@ -9,6 +9,6 @@ namespace EduLog.CoreLayer.DTOs.UserDTOs
         public string FullName { get; set; }
         public string Password { get; set; }
         public UserRole Role { get; set; }
-        public DateTime CreationTime { get; set; }
+        public DateTime RegistrationDate { get; set; }
     }
 }

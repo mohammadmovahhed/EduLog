@@ -11,5 +11,8 @@
     <div class="wrapper">
         @RenderBody()
     </div>
+
+    <partial name="_ValidationScriptsPartial" />
+    @await RenderSectionAsync("Scripts", false)
 </body>
 </html>

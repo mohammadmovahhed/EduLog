@@ -5,25 +5,31 @@
 }
 
 <h2>ثبت‌نام در سایت</h2>
-<form action="#">
+<form method="post">
+    <div asp-validation-summary="All" style="color: red"></div>
+
     <div class="input-box">
-        <input type="text" placeholder="نام کامل خود را وارد کنید">
+        <input asp-for="FullName" type="text" placeholder="نام کامل خود را وارد کنید">
+        <span asp-validation-for="FullName" style="color: red" />
     </div>
     <div class="input-box">
-        <input type="text" placeholder="ایمیل خود را وارد کنید">
+        <input asp-for="UserName" type="text" placeholder="نام کاربری خود را وارد کنید">
+        <span asp-validation-for="UserName" style="color: red" />
     </div>
     <div class="input-box">
-        <input type="password" placeholder="کلمه عبور">
+        <input asp-for="Password" type="password" placeholder="کلمه عبور">
+        <span asp-validation-for="Password" style="color: red" />
     </div>
     <div class="input-box">
-        <input type="password" placeholder="تکرار کلمه عبور">
+        <input asp-for="ConfirmPassword" type="password" placeholder="تکرار کلمه عبور">
+        <span asp-validation-for="ConfirmPassword" style="color: red" />
     </div>
     <div class="policy">
         <input type="checkbox">
         <h3>با قوانین و مقررات موافقم</h3>
     </div>
     <div class="input-box button">
-        <input value="ثبت‌نام">
+        <input type="submit" value="ثبت‌نام">
     </div>
     <div class="text">
         <h3>قبلاً ثبت‌نام کرده‌اید؟ <a asp-page="SignIn">وارد شوید</a></h3>

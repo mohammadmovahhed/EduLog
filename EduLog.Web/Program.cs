@@ -42,6 +42,8 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("User", "Admin"));
 });
 
+builder.Services.AddControllersWithViews();
+
 var app = builder.Build();
 
 // Apply migrations automatically (create/update DB if needed)
@@ -69,5 +71,12 @@ app.UseAuthorization();
 app.MapStaticAssets();
 app.MapRazorPages()
    .WithStaticAssets();
+
+app.UseEndpoints(option =>
+{
+    option.MapControllerRoute(
+        name: "default",
+        pattern: "{Area=exists}/{controller=Home}/{action=Index}/{id?}");
+});
 
 app.Run();

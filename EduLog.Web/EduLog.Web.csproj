@@ -18,4 +18,8 @@
     <ProjectReference Include="..\EduLog.DataLayer\EduLog.DataLayer.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Areas\AdminPanel\Models\" />
+  </ItemGroup>
+
 </Project>

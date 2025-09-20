@@ -7,6 +7,7 @@ using System.ComponentModel.DataAnnotations;
 namespace EduLog.Web.Pages.Auth
 {
     [BindProperties]
+    [ValidateAntiForgeryToken]
     public class SignUpModel : PageModel
     {
         #region Properties

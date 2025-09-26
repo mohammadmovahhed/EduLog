@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace EduLog.DataLayer.Entities
 {
@@ -11,6 +12,7 @@ namespace EduLog.DataLayer.Entities
         public string Slug { get; set; }
         public string MetaTag { get; set; }
         public string MetaDescription { get; set; }
+        public int? ParentId { get; set; }
 
 
         public ICollection<Post> Posts { get; set; }

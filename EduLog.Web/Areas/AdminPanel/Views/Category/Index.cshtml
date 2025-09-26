@@ -1,0 +1,48 @@
+﻿@model List<EduLog.CoreLayer.DTOs.CategoriesDTOs.CategoryDto>
+@{
+    ViewData["Title"] = "دسته بندی ها";
+    var counter = 1;
+}
+
+<section class="content-header">
+    <h1>@ViewData["Title"]</h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="Admin" asp-controller="Category" asp-action="Index"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">@ViewData["Title"]</li>
+    </ol>
+</section>
+
+<section class="content">
+    <a asp-area="Admin" asp-controller="Category" asp-action="Create" class="btn btn-primary margin-bottom 2">ایجاد دسته بندی جدید</a>
+    <div class="box box-primary">
+        <div class="box-body">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>عنوان</th>
+                        <th>زیرگروه</th>
+                        <th>عملیات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>@counter</td>
+                            <td>@item.Title</td>
+                            <td>@item.Title</td>
+                            <td></td>
+                            <td>
+                                <a asp-area="Admin" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">ویرایش</a>
+                                <a asp-area="Admin" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">حذف</a>
+                            </td>
+                        </tr>
+
+                        counter++;
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

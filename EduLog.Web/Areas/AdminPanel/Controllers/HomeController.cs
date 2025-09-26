@@ -2,7 +2,7 @@
 
 namespace EduLog.Web.Areas.AdminPanel.Controllers
 {
-    [Area("admin")]
+    [Area("adminpanel")]
     public class HomeController : Controller
     {
         public IActionResult Index()

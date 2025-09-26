@@ -1,7 +1,7 @@
 ﻿using EduLog.CoreLayer.DTOs.UserDTOs;
 using EduLog.CoreLayer.Utilities;
 
-namespace EduLog.CoreLayer.Services.Users
+namespace EduLog.CoreLayer.Services
 {
     public interface IUserService
     {

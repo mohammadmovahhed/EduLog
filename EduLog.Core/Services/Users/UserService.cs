@@ -5,7 +5,7 @@ using EduLog.DataLayer.Entities;
 using EduLog.DataLayer.Enums;
 using Microsoft.EntityFrameworkCore;
 
-namespace EduLog.CoreLayer.Services.Users
+namespace EduLog.CoreLayer.Services
 {
     public class UserService : IUserService
     {

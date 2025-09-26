@@ -1,5 +1,5 @@
 ﻿using EduLog.CoreLayer.DTOs.UserDTOs;
-using EduLog.CoreLayer.Services.Users;
+using EduLog.CoreLayer.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;

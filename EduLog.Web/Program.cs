@@ -1,4 +1,4 @@
-using EduLog.CoreLayer.Services.Users;
+using EduLog.CoreLayer.Services;
 using EduLog.DataLayer.Context;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +16,7 @@ builder.Services.AddDbContext<BlogContext>(options =>
 );
 
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

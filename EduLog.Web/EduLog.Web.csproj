@@ -2296,6 +2296,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="15.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -2305,10 +2306,6 @@
   <ItemGroup>
     <ProjectReference Include="..\EduLog.Core\EduLog.CoreLayer.csproj" />
     <ProjectReference Include="..\EduLog.DataLayer\EduLog.DataLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Areas\AdminPanel\Models\" />
   </ItemGroup>
 
   <ItemGroup>

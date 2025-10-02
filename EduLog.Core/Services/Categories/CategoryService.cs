@@ -20,7 +20,6 @@ namespace EduLog.CoreLayer.Services
                 return OperationResult.Error("آیدی معتبر نیست");
 
             var category = await _blogContext.Categories
-                .Include(c => c.ParentId)
                 .Where(c => c.Id == id && !c.IsDelete)
                 .Select(c => new CategoryDto
                 {

@@ -1,0 +1,33 @@
+﻿@model EduLog.Web.Areas.AdminPanel.Models.Categories.CategoryCreateViewModel
+@{
+    ViewData["Title"] = "افزودن دسته بندی";
+}
+
+<section class="content-header">
+    <h1>@ViewData["Title"]</h1>
+    <ol class="breadcrumb">
+        <li><a asp-area="adminpanel" asp-controller="Category" asp-action="Index"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li class="active">@ViewData["Title"]</li>
+    </ol>
+</section>
+
+<form class="box box-danger" method="post" asp-area="adminpanel" asp-controller="Category" asp-action="Create">
+    <div class="box-body row">
+        <div class="col-md-6">
+            @Html.EditorFor(x=>x.Title)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(x => x.Slug)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(x => x.MetaTag)
+        </div>
+        <div class="col-md-6">
+            @Html.EditorFor(x=>x.MetaDescription)
+        </div>
+
+        <div class="box-footer">
+            <button type="submit" class="btn btn-success">ثبت اطلاعات</button>
+        </div>
+    </div>
+</form>

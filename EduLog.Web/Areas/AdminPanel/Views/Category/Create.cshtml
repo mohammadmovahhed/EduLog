@@ -1,20 +1,23 @@
 ﻿@model EduLog.Web.Areas.AdminPanel.Models.Categories.CategoryCreateViewModel
 @{
     ViewData["Title"] = "افزودن دسته بندی";
+    ViewData["selected"] = "category";
 }
 
 <section class="content-header">
     <h1>@ViewData["Title"]</h1>
     <ol class="breadcrumb">
-        <li><a asp-area="adminpanel" asp-controller="Category" asp-action="Index"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li><a asp-area="adminpanel" asp-controller="adminpanel" asp-action="Index"><i class="fa fa-dashboard"></i> خانه</a></li>
+        <li><a asp-area="adminpanel" asp-controller="Category" asp-action="Index"><i class="fa fa-dashboard"></i> دسته بندی ها</a></li>
         <li class="active">@ViewData["Title"]</li>
     </ol>
 </section>
 
 <form class="box box-danger" method="post" asp-area="adminpanel" asp-controller="Category" asp-action="Create">
+    <input type="hidden" asp-for="ParentId" />
     <div class="box-body row">
         <div class="col-md-6">
-            @Html.EditorFor(x=>x.Title)
+            @Html.EditorFor(x => x.Title)
         </div>
         <div class="col-md-6">
             @Html.EditorFor(x => x.Slug)
@@ -23,7 +26,7 @@
             @Html.EditorFor(x => x.MetaTag)
         </div>
         <div class="col-md-6">
-            @Html.EditorFor(x=>x.MetaDescription)
+            @Html.EditorFor(x => x.MetaDescription)
         </div>
 
         <div class="box-footer">

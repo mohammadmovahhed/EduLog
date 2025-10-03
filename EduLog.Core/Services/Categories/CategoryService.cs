@@ -14,10 +14,10 @@ namespace EduLog.CoreLayer.Services
             _blogContext = blogContext;
         }
 
-        public async Task<OperationResult> GetByIdAsync(int id)
+        public async Task<OperationResult<CategoryDto>> GetByIdAsync(int id)
         {
             if (id <= 0)
-                return OperationResult.Error("آیدی معتبر نیست");
+                return OperationResult.Error<CategoryDto>(message: "آیدی معتبر نیست");
 
             var category = await _blogContext.Categories
                 .Where(c => c.Id == id && !c.IsDelete)
@@ -35,9 +35,9 @@ namespace EduLog.CoreLayer.Services
                 .FirstOrDefaultAsync();
 
             if (category == null)
-                return OperationResult.NotFound("دسته‌بندی یافت نشد");
+                return OperationResult.Error<CategoryDto>(message: "دسته‌بندی یافت نشد");
 
-            return OperationResult.Success(category);
+            return OperationResult.Success<CategoryDto>(category);
         }
 
         public async Task<OperationResult> GetBySlugAsync(string slug)
@@ -118,7 +118,7 @@ namespace EduLog.CoreLayer.Services
             var category = new Category
             {
                 Title = createDto.Title.Trim(),
-                Slug = createDto.Slug.Trim().ToLower(),
+                Slug = createDto.Slug.ToSlug(),
                 MetaTag = createDto.MetaTag?.Trim(),
                 MetaDescription = createDto.MetaDescription?.Trim(),
                 ParentId = createDto.ParentId,
@@ -143,7 +143,7 @@ namespace EduLog.CoreLayer.Services
         public async Task<OperationResult> UpdateAsync(CategoryUpdateDto updateDto)
         {
             // اعتبارسنجی
-            var validationResult = await ValidateCategoryAsync(updateDto.Title, updateDto.Slug, updateDto.ParentId, updateDto.Id);
+            var validationResult = await ValidateCategoryAsync(updateDto.Title, updateDto.Slug, updateDto.Id);
             if (!validationResult.IsSuccess)
                 return OperationResult.Error(validationResult.Message);
 
@@ -159,16 +159,16 @@ namespace EduLog.CoreLayer.Services
             if (!isSlugUnique.Data)
                 return OperationResult.Error("این Slug قبلاً استفاده شده است");
 
-            // بررسی حلقه در سلسله مراتب
-            if (updateDto.ParentId.HasValue && await HasCircularReferenceAsync(updateDto.Id, updateDto.ParentId.Value))
-                return OperationResult.Error("امکان ایجاد حلقه در سلسله مراتب وجود ندارد");
+            //// بررسی حلقه در سلسله مراتب
+            //if (updateDto.ParentId.HasValue && await HasCircularReferenceAsync(updateDto.Id))
+            //    return OperationResult.Error("امکان ایجاد حلقه در سلسله مراتب وجود ندارد");
 
             // به‌روزرسانی
             category.Title = updateDto.Title.Trim();
-            category.Slug = updateDto.Slug.Trim().ToLower();
+            category.Slug = updateDto.Slug.ToSlug();
             category.MetaTag = updateDto.MetaTag?.Trim();
             category.MetaDescription = updateDto.MetaDescription?.Trim();
-            category.ParentId = updateDto.ParentId;
+            //category.ParentId = updateDto.ParentId;
 
             try
             {
@@ -219,7 +219,7 @@ namespace EduLog.CoreLayer.Services
         public async Task<OperationResult<bool>> IsSlugUniqueAsync(string slug, int? excludeId = null)
         {
             var query = _blogContext.Categories
-                .Where(c => !c.IsDelete && c.Slug == slug.Trim().ToLower());
+                .Where(c => !c.IsDelete && c.Slug == slug.ToSlug());
 
             if (excludeId.HasValue)
                 query = query.Where(c => c.Id != excludeId.Value);

@@ -21,7 +21,5 @@ namespace EduLog.CoreLayer.DTOs.CategoriesDTOs
 
         [StringLength(500, ErrorMessage = "توضیحات متا نمی‌تواند بیش از 500 کاراکتر باشد")]
         public string MetaDescription { get; set; }
-
-        public int? ParentId { get; set; }
     }
 }

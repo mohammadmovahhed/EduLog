@@ -10,8 +10,8 @@ namespace EduLog.DataLayer.Entities
 
         [Required]
         public string Slug { get; set; }
-        public string MetaTag { get; set; }
-        public string MetaDescription { get; set; }
+        public string? MetaTag { get; set; }
+        public string? MetaDescription { get; set; }
         public int? ParentId { get; set; }
 
 

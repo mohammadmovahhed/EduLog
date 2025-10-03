@@ -9,6 +9,8 @@ namespace EduLog.Web.MappingProfiles.AdminPanel.Categories
         public CategoryProfile()
         {
             CreateMap<CategoryCreateDto, CategoryCreateViewModel>().ReverseMap();
+            CreateMap<CategoryDto, CategoryEditViewModel>().ReverseMap();
+            CreateMap<CategoryUpdateDto, CategoryEditViewModel>().ReverseMap();
         }
     }
 }

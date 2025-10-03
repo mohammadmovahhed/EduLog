@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "دسته بندی ها";
     var counter = 1;
+    ViewData["selected"] = "category";
 }
 
 <section class="content-header">
@@ -26,16 +27,28 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var item in Model)
+                    @foreach (var item in Model.Where(x => x.ParentId is null))
                     {
                         <tr>
                             <td>@counter</td>
                             <td>@item.Title</td>
-                            <td>@item.Title</td>
-                            <td></td>
+                            <td>
+                                <div class="d-flex flex-row flex-nowrap overflow-auto" style="max-width:400px; gap:0.5rem;">
+                                    @foreach (var subcategory in Model.Where(x => x.ParentId == item.Id))
+                                    {
+                                        <span class="badge bg-secondary flex-shrink-0 subcategory-badge" style="white-space: nowrap; cursor:pointer;" data-id="@subcategory.Id">
+                                            @subcategory.Title
+                                        </span>
+                                    }
+                                </div>
+                            </td>
+
                             <td>
                                 <a asp-area="adminpanel" asp-controller="Category" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-info">ویرایش</a>
-                                <a asp-area="adminpanel" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">حذف</a>
+                                <form asp-area="adminpanel" asp-controller="Category" asp-action="Delete" asp-route-id="@item.Id" method="post" style="display:inline;">
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('آیا مطمئن هستید؟')">حذف</button>
+                                </form>
+                                <a asp-area="adminpanel" asp-controller="Category" asp-action="Create" asp-route-parentid="@item.Id" class="btn btn-sm btn-success">افزودن زیرگروه</a>
                             </td>
                         </tr>
 
@@ -45,4 +58,70 @@
             </table>
         </div>
     </div>
+
+    <div id="popup-container" style="position:absolute; display:none; z-index:1000;">
+        <div class="popup-menu d-flex bg-white border p-2 shadow rounded" style="gap:0.5rem;">
+            <a id="popup-edit"
+               asp-area="adminpanel"
+               asp-controller="Category"
+               asp-action="Edit"
+               asp-route-id="0"
+               class="btn btn-sm btn-info rounded-10">ویرایش</a>
+
+            <form id="popup-delete-form"
+                  asp-area="adminpanel"
+                  asp-controller="Category"
+                  asp-action="Delete"
+                  asp-route-id="0"
+                  method="post"
+                  style="display:inline;">
+                <button type="submit"
+                        class="btn btn-sm btn-danger"
+                        onclick="return confirm('آیا مطمئن هستید؟')">
+                    حذف
+                </button>
+            </form>
+        </div>
+    </div>
 </section>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const popupContainer = document.getElementById("popup-container");
+        const editLink = document.getElementById("popup-edit");
+        const deleteForm = document.getElementById("popup-delete-form");
+
+        document.querySelectorAll(".subcategory-badge").forEach(function (badge) {
+            badge.addEventListener("click", function (e) {
+                e.stopPropagation();
+
+                const id = badge.dataset.id;
+
+                // تغییر مقدار route-id برای لینک و فرم
+                editLink.setAttribute("href", `/adminpanel/Category/Edit/${id}`);
+                deleteForm.setAttribute("action", `/adminpanel/Category/Delete/${id}`);
+
+                // موقعیت‌دهی popup کنار badge
+                const rect = badge.getBoundingClientRect();
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+                popupContainer.style.top = (rect.bottom + scrollTop + 5) + "px";
+                popupContainer.style.left = (rect.left + scrollLeft) + "px";
+                popupContainer.style.display = "block";
+            });
+        });
+
+        document.addEventListener("click", function () {
+            popupContainer.style.display = "none";
+        });
+    });
+
+</script>
+
+<style>
+    .popup-menu {
+        transition: opacity 0.2s ease;
+        opacity: 1;
+    }
+</style>

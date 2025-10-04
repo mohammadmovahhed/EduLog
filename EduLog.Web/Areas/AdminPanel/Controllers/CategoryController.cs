@@ -3,7 +3,6 @@ using EduLog.CoreLayer.DTOs.CategoriesDTOs;
 using EduLog.CoreLayer.Services;
 using EduLog.Web.Areas.AdminPanel.Models.Categories;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace EduLog.Web.Areas.AdminPanel.Controllers
 {
@@ -102,6 +101,13 @@ namespace EduLog.Web.Areas.AdminPanel.Controllers
 
             await categoryService.DeleteAsync(id);
             return RedirectToAction("Index");
+        }
+
+        public IActionResult GetSubCategories(int parentId)
+        {
+            var categoy = categoryService.GetSubCategories(parentId);
+
+            return new JsonResult(categoy);
         }
     }
 }

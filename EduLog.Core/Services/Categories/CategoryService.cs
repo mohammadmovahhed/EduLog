@@ -1,17 +1,23 @@
-﻿using EduLog.CoreLayer.DTOs.CategoriesDTOs;
+﻿using AutoMapper;
+using EduLog.CoreLayer.DTOs.CategoriesDTOs;
+using EduLog.CoreLayer.Mappers;
 using EduLog.CoreLayer.Utilities;
 using EduLog.DataLayer.Context;
 using EduLog.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace EduLog.CoreLayer.Services
 {
     public class CategoryService : ICategoryService
     {
         private readonly BlogContext _blogContext;
-        public CategoryService(BlogContext blogContext)
+        private readonly IMapper _mapper;
+        public CategoryService(BlogContext blogContext,
+                               IMapper mapper)
         {
             _blogContext = blogContext;
+            _mapper = mapper;
         }
 
         public async Task<OperationResult<CategoryDto>> GetByIdAsync(int id)
@@ -293,6 +299,18 @@ namespace EduLog.CoreLayer.Services
             }
 
             return false;
+        }
+
+        public async Task<List<CategoryDto>> GetAllCategory()
+        {
+            return await _blogContext.Categories
+                .Select(category => CategoryMapper.Map(category)).ToListAsync();
+        }
+
+        public List<CategoryDto> GetSubCategories(int parentId)
+        {
+            return _blogContext.Categories.Where(r => r.ParentId == parentId)
+                .Select(category => CategoryMapper.Map(category)).ToList();
         }
 
         #endregion

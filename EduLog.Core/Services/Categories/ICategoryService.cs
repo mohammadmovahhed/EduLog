@@ -13,5 +13,7 @@ namespace EduLog.CoreLayer.Services
         Task<OperationResult<List<CategoryDto>>> GetHierarchicalAsync();
         Task<OperationResult<bool>> IsSlugUniqueAsync(string slug, int? excludeId = null);
         Task<OperationResult> UpdateAsync(CategoryUpdateDto updateDto);
+        Task<List<CategoryDto>> GetAllCategory();
+        List<CategoryDto> GetSubCategories(int parentId);
     }
 }

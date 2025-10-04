@@ -1,6 +1,8 @@
 using EduLog.CoreLayer.Services;
+using EduLog.CoreLayer.Services.FileManager;
+using EduLog.CoreLayer.Services.Posts;
+using EduLog.CoreLayer.Utilities;
 using EduLog.DataLayer.Context;
-using EduLog.Web.MappingProfiles.AdminPanel.Categories;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,11 +20,14 @@ builder.Services.AddDbContext<BlogContext>(options =>
 
 builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IFileManager, FileManager>();
+builder.Services.AddScoped<IPostService, PostService>();
 
-builder.Services.AddAutoMapper(cfg =>
-{
-},
-typeof(CategoryProfile).Assembly);
+builder.Services.AddAutoMapper(cfg => { },
+    typeof(EduLog.Web.MappingProfiles.AdminPanel.Categories.CategoryProfile).Assembly);
+
+builder.Services.AddAutoMapper(cfg => { },
+    typeof(PostProfile).Assembly);
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

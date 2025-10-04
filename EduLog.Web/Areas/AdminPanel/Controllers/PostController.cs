@@ -25,7 +25,7 @@ namespace EduLog.Web.Areas.AdminPanel.Controllers
             {
                 CategorySlug = categorySlug.ToSlug(),
                 PageId = pageId,
-                Take = 1,
+                Take = 10,
                 Title = title
             };
             var model = _postService.GetPostsByFilter(param);

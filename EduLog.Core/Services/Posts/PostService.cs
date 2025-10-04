@@ -82,7 +82,7 @@ namespace EduLog.CoreLayer.Services.Posts
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filterParams.CategorySlug))
-                result = result.Where(r => r.Category.Slug == filterParams.CategorySlug);
+                result = result.Where(r => r.Category.Slug.Contains(filterParams.CategorySlug));
 
             if (!string.IsNullOrWhiteSpace(filterParams.Title))
                 result = result.Where(r => r.Title.Contains(filterParams.Title));

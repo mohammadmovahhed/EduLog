@@ -7,7 +7,8 @@ namespace EduLog.CoreLayer.Services.Posts
     {
         OperationResult CreatePost(CreatePostDto command);
         OperationResult EditPost(EditPostDto command);
-        PostDto GetPostById(int postId);
+        PostDto GetPostBy(int postId);
+        Task<PostDto?> GetPostBy(string slug);
         PostFilterDto GetPostsByFilter(PostFilterParams filterParams);
         bool IsSlugExist(string slug);
     }

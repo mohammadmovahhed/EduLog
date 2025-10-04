@@ -65,7 +65,7 @@ namespace EduLog.Web.Areas.AdminPanel.Controllers
         }
         public IActionResult Edit(int id)
         {
-            var post = _postService.GetPostById(id);
+            var post = _postService.GetPostBy(id);
             if (post == null)
                 return RedirectToAction("Index");
 

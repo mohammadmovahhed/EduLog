@@ -4,7 +4,9 @@ using EduLog.CoreLayer.Mappers;
 using EduLog.CoreLayer.Services.FileManager;
 using EduLog.CoreLayer.Utilities;
 using EduLog.DataLayer.Context;
+using EduLog.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace EduLog.CoreLayer.Services.Posts
 {
@@ -64,12 +66,26 @@ namespace EduLog.CoreLayer.Services.Posts
             return OperationResult.Success();
         }
 
-        public PostDto GetPostById(int postId)
+        public PostDto GetPostBy(int postId)
         {
             var post = _context.Posts
                 .Include(c => c.SubCategory)
                 .Include(c => c.Category)
                 .FirstOrDefault(c => c.Id == postId);
+            return PostMapper.MapToDto(post);
+        }
+
+        public async Task<PostDto?> GetPostBy(string slug)
+        {
+            var post = await _context.Posts
+                .Include(c => c.SubCategory)
+                .Include(c => c.Category)
+                .Include(c => c.User)
+                .FirstOrDefaultAsync(c => c.Slug == slug);
+
+            if (post is null)
+                return null;
+
             return PostMapper.MapToDto(post);
         }
 

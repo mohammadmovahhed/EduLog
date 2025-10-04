@@ -1,4 +1,5 @@
 using EduLog.CoreLayer.Services;
+using EduLog.CoreLayer.Services.Comment;
 using EduLog.CoreLayer.Services.FileManager;
 using EduLog.CoreLayer.Services.Posts;
 using EduLog.CoreLayer.Utilities;
@@ -22,6 +23,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFileManager, FileManager>();
 builder.Services.AddScoped<IPostService, PostService>();
+builder.Services.AddScoped<ICommentService, CommentService>();
 
 builder.Services.AddAutoMapper(cfg => { },
     typeof(EduLog.Web.MappingProfiles.AdminPanel.Categories.CategoryProfile).Assembly);

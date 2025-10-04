@@ -31,6 +31,7 @@ namespace EduLog.Web.Pages
         public int PostId { get; set; }
 
         public List<CommentDto> Comments { get; set; }
+        public List<PostDto> RelatedPosts { get; set; }
 
         public async Task<IActionResult> OnGet(string slug)
         {
@@ -39,6 +40,7 @@ namespace EduLog.Web.Pages
                 return NotFound();
 
             Comments = await commentService.GetPostComments(Post.PostId);
+            RelatedPosts = await postService.GetRelatedPosts(Post.SubCategoryId ?? Post.CategoryId);
             return Page();
         }
 
@@ -50,10 +52,11 @@ namespace EduLog.Web.Pages
             if (!ModelState.IsValid)
             {
                 Post = await postService.GetPostBy(slug);
+                RelatedPosts = await postService.GetRelatedPosts(Post.SubCategoryId ?? Post.CategoryId);
                 return Page();
             }
 
-            await commentService.CreateComment(new CoreLayer.DTOs.CommentsDTOs.CreateCommentDto
+            await commentService.CreateComment(new CreateCommentDto
             {
                 PostId = PostId,
                 Text = Text,

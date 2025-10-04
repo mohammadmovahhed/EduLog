@@ -2,7 +2,6 @@
 using EduLog.CoreLayer.Utilities;
 using EduLog.DataLayer.Context;
 using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
 
 namespace EduLog.CoreLayer.Services.Comment
 {

@@ -11,5 +11,7 @@ namespace EduLog.CoreLayer.Services.Posts
         Task<PostDto?> GetPostBy(string slug);
         PostFilterDto GetPostsByFilter(PostFilterParams filterParams);
         bool IsSlugExist(string slug);
+        Task<List<PostDto>> GetRelatedPosts(int categoryId);
+        List<PostDto> GetPopularPosts();
     }
 }

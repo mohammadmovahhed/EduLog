@@ -119,5 +119,25 @@ namespace EduLog.CoreLayer.Services.Posts
         {
             return _context.Posts.Any(p => p.Slug == slug.ToSlug());
         }
+
+        public async Task<List<PostDto>> GetRelatedPosts(int categoryId)
+        {
+            return await _context.Posts
+                .Where(p => p.CategoryId == categoryId)
+                .OrderByDescending(p => p.CreateAt)
+                .Take(6)
+                .Select(post => PostMapper.MapToDto(post))
+                .ToListAsync();
+        }
+
+        public List<PostDto> GetPopularPosts()
+        {
+            return _context.Posts
+                .Include(post => post.User)
+                .OrderByDescending(post => post.Visits)
+                .Take(4)
+                .Select(post => PostMapper.MapToDto(post))
+                .ToList();
+        }
     }
 }

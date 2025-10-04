@@ -1,6 +1,12 @@
 ﻿$(document).ready(function () {
     console.log("Ready");
     LoadCkEditor4();
+    $.ajax({
+        url: "/index/PopularPosts",
+        type: "get"
+    }).done(function (data) {
+        $('#popular_posts').html(data);
+    })
 });
 
 

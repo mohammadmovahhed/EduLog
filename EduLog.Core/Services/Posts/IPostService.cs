@@ -13,5 +13,6 @@ namespace EduLog.CoreLayer.Services.Posts
         bool IsSlugExist(string slug);
         Task<List<PostDto>> GetRelatedPosts(int categoryId);
         List<PostDto> GetPopularPosts();
+        Task IncreaseVisits(int postId);
     }
 }

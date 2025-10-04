@@ -4,7 +4,6 @@ using EduLog.CoreLayer.Mappers;
 using EduLog.CoreLayer.Services.FileManager;
 using EduLog.CoreLayer.Utilities;
 using EduLog.DataLayer.Context;
-using EduLog.DataLayer.Entities;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
@@ -138,6 +137,13 @@ namespace EduLog.CoreLayer.Services.Posts
                 .Take(4)
                 .Select(post => PostMapper.MapToDto(post))
                 .ToList();
+        }
+
+        public async Task IncreaseVisits(int postId)
+        {
+            var post = await _context.Posts.FirstAsync(x => x.Id == postId);
+            post.Visits++;
+            await _context.SaveChangesAsync();
         }
     }
 }

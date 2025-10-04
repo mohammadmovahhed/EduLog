@@ -41,6 +41,7 @@ namespace EduLog.Web.Pages
 
             Comments = await commentService.GetPostComments(Post.PostId);
             RelatedPosts = await postService.GetRelatedPosts(Post.SubCategoryId ?? Post.CategoryId);
+            await postService.IncreaseVisits(Post.PostId);
             return Page();
         }
 

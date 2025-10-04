@@ -15,6 +15,10 @@ namespace EduLog.DataLayer.Entities
         public int? ParentId { get; set; }
 
 
+        [InverseProperty("Category")]
         public ICollection<Post> Posts { get; set; }
+
+        [InverseProperty("SubCategory")]
+        public ICollection<Post> SubPosts { get; set; }
     }
 }

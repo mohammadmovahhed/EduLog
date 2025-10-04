@@ -76,6 +76,10 @@ namespace EduLog.DataLayer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("IsDelete")
                         .HasColumnType("bit");
 
@@ -84,6 +88,9 @@ namespace EduLog.DataLayer.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("SubCategoryId")
                         .HasColumnType("int");
 
                     b.Property<string>("Title")
@@ -99,6 +106,8 @@ namespace EduLog.DataLayer.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("SubCategoryId");
 
                     b.HasIndex("UserId");
 
@@ -180,6 +189,11 @@ namespace EduLog.DataLayer.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("EduLog.DataLayer.Entities.Category", "SubCategory")
+                        .WithMany("SubPosts")
+                        .HasForeignKey("SubCategoryId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("EduLog.DataLayer.Entities.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
@@ -187,6 +201,8 @@ namespace EduLog.DataLayer.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("SubCategory");
 
                     b.Navigation("User");
                 });
@@ -213,6 +229,8 @@ namespace EduLog.DataLayer.Migrations
             modelBuilder.Entity("EduLog.DataLayer.Entities.Category", b =>
                 {
                     b.Navigation("Posts");
+
+                    b.Navigation("SubPosts");
                 });
 
             modelBuilder.Entity("EduLog.DataLayer.Entities.Post", b =>

@@ -19,6 +19,8 @@ namespace EduLog.DataLayer.Entities
         public PostStatus Status { get; set; }
         public int UserId { get; set; }
         public int CategoryId { get; set; }
+        public int? SubCategoryId { get; set; }
+        public string ImageName { get; set; }
 
 
         [ForeignKey(nameof(UserId))]
@@ -26,6 +28,9 @@ namespace EduLog.DataLayer.Entities
 
         [ForeignKey(nameof(CategoryId))]
         public Category Category { get; set; }
+
+        [ForeignKey(nameof(SubCategoryId))]
+        public Category SubCategory { get; set; }
 
         public ICollection<PostComment> PostComments { get; set; }
     }

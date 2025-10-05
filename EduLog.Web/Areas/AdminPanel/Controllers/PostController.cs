@@ -53,7 +53,8 @@ namespace EduLog.Web.Areas.AdminPanel.Controllers
                 Slug = createViewModel.Slug.ToSlug(),
                 SubCategoryId = createViewModel.SubCategoryId == 0 ? null : createViewModel.SubCategoryId,
                 Title = createViewModel.Title,
-                UserId = User.GetUserId()
+                UserId = User.GetUserId(),
+                IsSpecial = createViewModel.IsSpecial
             });
 
             if (result.Status != OperationResultStatus.Success)
@@ -75,7 +76,8 @@ namespace EduLog.Web.Areas.AdminPanel.Controllers
                 Description = post.Description,
                 Slug = post.Slug.ToSlug(),
                 SubCategoryId = post.SubCategoryId,
-                Title = post.Title
+                Title = post.Title,
+                IsSpecial = post.IsSpecial
             };
             return View(model);
         }
@@ -97,7 +99,8 @@ namespace EduLog.Web.Areas.AdminPanel.Controllers
                 Slug = editViewModel.Slug.ToSlug(),
                 SubCategoryId = editViewModel.SubCategoryId == 0 ? null : editViewModel.SubCategoryId,
                 Title = editViewModel.Title,
-                PostId = id
+                PostId = id,
+                IsSpecial = editViewModel.IsSpecial
             });
             if (result.Status != OperationResultStatus.Success)
             {

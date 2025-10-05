@@ -21,6 +21,7 @@ namespace EduLog.DataLayer.Entities
         public int CategoryId { get; set; }
         public int? SubCategoryId { get; set; }
         public string ImageName { get; set; }
+        public bool IsSpecial { get; set; }
 
 
         [ForeignKey(nameof(UserId))]

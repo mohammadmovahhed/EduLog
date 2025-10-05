@@ -24,6 +24,7 @@ builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IFileManager, FileManager>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<ICommentService, CommentService>();
+builder.Services.AddTransient<IMainPageService, MainPageService>();
 
 builder.Services.AddAutoMapper(cfg => { },
     typeof(EduLog.Web.MappingProfiles.AdminPanel.Categories.CategoryProfile).Assembly);

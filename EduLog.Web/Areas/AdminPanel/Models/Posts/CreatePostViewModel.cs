@@ -29,5 +29,8 @@ namespace EduLog.Web.Areas.AdminPanel.Models.Posts
         [Display(Name = "عکس")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
         public IFormFile ImageFile { get; set; }
+
+        [Display(Name = "پست ویژه؟")]
+        public bool IsSpecial { get; set; }
     }
 }

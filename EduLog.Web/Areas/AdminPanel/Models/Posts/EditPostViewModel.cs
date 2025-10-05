@@ -27,5 +27,8 @@ namespace EduLog.Web.Areas.AdminPanel.Models.Posts
 
         [Display(Name = "عکس")]
         public IFormFile ImageFile { get; set; }
+
+        [Display(Name = "پست ویژه؟")]
+        public bool IsSpecial { get; set; }
     }
 }

@@ -1,4 +1,8 @@
-﻿
+﻿@inject EduLog.CoreLayer.Services.ICategoryService _categoryService;
+@{
+    var categories = await _categoryService.GetAllCategory();
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +12,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="">
+    @await RenderSectionAsync("MetaTags", false)
 
     <!-- Google Fonts -->
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,600,700%7CSource+Sans+Pro:400,600,700' rel='stylesheet'>
@@ -28,33 +33,26 @@
 </head>
 
 <body class="bg-light style-default style-rounded">
-
-    <!-- Preloader -->
     <div class="loader-mask">
         <div class="loader">
             <div></div>
         </div>
     </div>
 
-    <!-- Bg Overlay -->
     <div class="content-overlay"></div>
 
-    <partial name="Headers/_Sidenav" />
+    <partial name="Headers/_Sidenav" model="categories" />
 
     <main class="main oh" id="main">
-
         <partial name="Headers/_Topbar" />
-
-        <partial name="Headers/_MainHeader" />
+        <partial name="Headers/_MainHeader" model="categories" />
 
         @RenderBody()
 
         <partial name="_Footer" />
-
         <div id="back-to-top">
             <a href="#top" aria-label="Go to top"><i class="ui-arrow-up"></i></a>
         </div>
-
     </main>
 
     <script src="/js/jquery.min.js"></script>
@@ -67,7 +65,7 @@
     <script src="/js/modernizr.min.js"></script>
     <script src="/js/scripts.js"></script>
     <script src="/js/custom.js"></script>
+    @await RenderSectionAsync("Scripts", false)
 
 </body>
-
 </html>

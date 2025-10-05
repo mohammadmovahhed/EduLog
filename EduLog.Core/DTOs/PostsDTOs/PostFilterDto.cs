@@ -1,8 +1,9 @@
-﻿namespace EduLog.CoreLayer.DTOs.PostsDTOs
+﻿using EduLog.CoreLayer.Utilities;
+
+namespace EduLog.CoreLayer.DTOs.PostsDTOs
 {
-    public class PostFilterDto
+    public class PostFilterDto: BasePagination
     {
-        public int PageCount { get; set; }
         public List<PostDto> Posts { get; set; }
         public PostFilterParams FilterParams { get; set; }
     }

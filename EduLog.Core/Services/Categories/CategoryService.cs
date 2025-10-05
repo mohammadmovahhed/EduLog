@@ -46,30 +46,12 @@ namespace EduLog.CoreLayer.Services
             return OperationResult.Success<CategoryDto>(category);
         }
 
-        public async Task<OperationResult> GetBySlugAsync(string slug)
+        public CategoryDto GetBySlug(string slug)
         {
-            if (string.IsNullOrWhiteSpace(slug))
-                return OperationResult.Error("Slug معتبر نیست");
-
-            var category = await _blogContext.Categories
-                .Where(c => c.Slug == slug.Trim() && !c.IsDelete)
-                .Select(c => new CategoryDto
-                {
-                    Id = c.Id,
-                    Title = c.Title,
-                    Slug = c.Slug,
-                    MetaTag = c.MetaTag,
-                    MetaDescription = c.MetaDescription,
-                    ParentId = c.ParentId,
-                    CreateAt = c.CreateAt,
-                    PostsCount = c.Posts.Count(p => !p.IsDelete)
-                })
-                .FirstOrDefaultAsync();
-
+            var category = _blogContext.Categories.FirstOrDefault(c => c.Slug == slug);
             if (category == null)
-                return OperationResult.NotFound("دسته‌بندی یافت نشد");
-
-            return OperationResult.Success(category);
+                return null;
+            return CategoryMapper.Map(category);
         }
 
         public async Task<OperationResult<List<CategoryDto>>> GetAllAsync(CategoryFilterDto filter)

@@ -9,7 +9,7 @@ namespace EduLog.CoreLayer.Services
         Task<OperationResult> DeleteAsync(int id);
         Task<OperationResult<List<CategoryDto>>> GetAllAsync(CategoryFilterDto filter);
         Task<OperationResult<CategoryDto>> GetByIdAsync(int id);
-        Task<OperationResult> GetBySlugAsync(string slug);
+        CategoryDto GetBySlug(string slug);
         Task<OperationResult<List<CategoryDto>>> GetHierarchicalAsync();
         Task<OperationResult<bool>> IsSlugUniqueAsync(string slug, int? excludeId = null);
         Task<OperationResult> UpdateAsync(CategoryUpdateDto updateDto);

@@ -97,21 +97,22 @@ namespace EduLog.CoreLayer.Services.Posts
                 .AsQueryable();
 
             if (!string.IsNullOrWhiteSpace(filterParams.CategorySlug))
-                result = result.Where(r => r.Category.Slug.Contains(filterParams.CategorySlug));
+                result = result.Where(r => r.Category.Slug == filterParams.CategorySlug
+                                           || r.SubCategory.Slug == filterParams.CategorySlug);
 
             if (!string.IsNullOrWhiteSpace(filterParams.Title))
                 result = result.Where(r => r.Title.Contains(filterParams.Title));
 
             var skip = (filterParams.PageId - 1) * filterParams.Take;
-            var pageCount = result.Count() / filterParams.Take;
-
-            return new PostFilterDto()
+            var model = new PostFilterDto()
             {
                 Posts = result.Skip(skip).Take(filterParams.Take)
                     .Select(post => PostMapper.MapToDto(post)).ToList(),
                 FilterParams = filterParams,
-                PageCount = pageCount
             };
+            model.GeneratePaging(result, filterParams.Take, filterParams.PageId);
+
+            return model;
         }
 
         public bool IsSlugExist(string slug)

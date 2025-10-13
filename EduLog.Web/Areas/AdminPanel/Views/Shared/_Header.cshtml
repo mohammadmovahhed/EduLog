@@ -1,4 +1,8 @@
-﻿<header class="main-header">
+﻿@using EduLog.CoreLayer.Utilities
+@{
+    var userFullName = UserUtil.GetUserName(User);
+}
+<header class="main-header">
     <a href="/AdminLayout/index.html" class="logo">
         <span class="logo-mini">پنل</span>
         <span class="logo-lg"><b>کنترل پنل مدیریت</b></span>
@@ -25,7 +29,8 @@
                                             <img src="/AdminLayout/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
-                                            علیرضا
+                                            @userFullName
+
                                             <small><i class="fa fa-clock-o"></i> ۵ دقیقه پیش</small>
                                         </h4>
                                         <p>متن پیام</p>
@@ -198,14 +203,14 @@
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="/AdminLayout/dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
-                        <span class="hidden-xs">علیرضا حسینی زاده</span>
+                        <span class="hidden-xs">@userFullName</span>
                     </a>
                     <ul class="dropdown-menu">
                         <li class="user-header">
                             <img src="/AdminLayout/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
                             <p>
-                                علیرضا حسینی زاده
+                                @userFullName
                                 <small>مدیریت کل سایت</small>
                             </p>
                         </li>

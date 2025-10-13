@@ -16,6 +16,7 @@ namespace EduLog.CoreLayer.Services
         public MainPageDto GetData()
         {
             var categories = _context.Categories
+                .Where(c => c.IsDelete == false)
                 .OrderByDescending(d => d.Id)
                 .Take(6)
                 .Include(c => c.Posts)
@@ -40,7 +41,7 @@ namespace EduLog.CoreLayer.Services
                 .Include(c => c.SubCategory)
                 .OrderByDescending(d => d.Id)
                 .Take(6)
-                .Select(post=>PostMapper.MapToDto(post)).ToList();
+                .Select(post => PostMapper.MapToDto(post)).ToList();
 
             return new MainPageDto()
             {

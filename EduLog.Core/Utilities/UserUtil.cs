@@ -11,5 +11,13 @@ namespace EduLog.CoreLayer.Utilities
 
             return Convert.ToInt32(principal.FindFirst(ClaimTypes.NameIdentifier)?.Value);
         }
+
+        public static string GetUserName(this ClaimsPrincipal principal)
+        {
+            if (principal == null)
+                throw new ArgumentNullException(nameof(principal));
+
+            return principal.FindFirst(ClaimTypes.Name)?.Value;
+        }
     }
 }

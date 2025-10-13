@@ -48,7 +48,7 @@ namespace EduLog.CoreLayer.Services
 
         public CategoryDto GetBySlug(string slug)
         {
-            var category = _blogContext.Categories.FirstOrDefault(c => c.Slug == slug);
+            var category = _blogContext.Categories.FirstOrDefault(c => c.Slug == slug && c.IsDelete == false);
             if (category == null)
                 return null;
             return CategoryMapper.Map(category);
@@ -57,8 +57,7 @@ namespace EduLog.CoreLayer.Services
         public async Task<OperationResult<List<CategoryDto>>> GetAllAsync(CategoryFilterDto filter)
         {
             var query = _blogContext.Categories
-                .Where(c => !c.IsDelete)
-                .AsQueryable();
+                .Where(c => c.IsDelete == false);
 
             // فیلترها
             if (!string.IsNullOrWhiteSpace(filter.Title))
@@ -258,40 +257,16 @@ namespace EduLog.CoreLayer.Services
             return OperationResult.Success();
         }
 
-        private async Task<bool> HasCircularReferenceAsync(int categoryId, int? parentId)
-        {
-            if (categoryId == parentId)
-                return true;
-
-            var currentParentId = parentId;
-            while (currentParentId.HasValue)
-            {
-                var parent = await _blogContext.Categories
-                    .Where(c => c.Id == currentParentId.Value && !c.IsDelete)
-                    .Select(c => new { c.ParentId })
-                    .FirstOrDefaultAsync();
-
-                if (parent == null)
-                    return false;
-
-                if (parent.ParentId == categoryId)
-                    return true;
-
-                currentParentId = parent.ParentId;
-            }
-
-            return false;
-        }
-
         public async Task<List<CategoryDto>> GetAllCategory()
         {
             return await _blogContext.Categories
+                .Where(c => c.IsDelete == false)
                 .Select(category => CategoryMapper.Map(category)).ToListAsync();
         }
 
         public List<CategoryDto> GetSubCategories(int parentId)
         {
-            return _blogContext.Categories.Where(r => r.ParentId == parentId)
+            return _blogContext.Categories.Where(r => r.ParentId == parentId && r.IsDelete == false)
                 .Select(category => CategoryMapper.Map(category)).ToList();
         }
 
